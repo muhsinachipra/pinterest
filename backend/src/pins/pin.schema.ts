@@ -31,6 +31,7 @@ export class Pin extends Document {
   @Prop({
     type: [
       {
+        _id: { type: Types.ObjectId, auto: true },
         user: { type: String, required: true },
         name: { type: String, required: true },
         comment: { type: String, required: true },
@@ -38,6 +39,7 @@ export class Pin extends Document {
     ],
   })
   comments: Array<{
+    _id: Types.ObjectId;
     user: string;
     name: string;
     comment: string;

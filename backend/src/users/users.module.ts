@@ -18,5 +18,6 @@ import { AuthGuard } from '../guards/auth.guard'; // Import AuthGuard
   ],
   providers: [UsersService, AuthGuard],
   controllers: [UsersController],
+  exports: [UsersService, MongooseModule],
 })
 export class UsersModule {}
