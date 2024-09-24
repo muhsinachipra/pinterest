@@ -1,20 +1,14 @@
 // backend\src\pins\pins.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Pin } from './pin.schema';
 
 @Injectable()
-export class PinService {
-  constructor(@InjectModel(Pin.name) private pinModel: Model<Pin>) {}
-
-  async createPin(createPinDto): Promise<Pin> {
-    const newPin = new this.pinModel(createPinDto);
-    return newPin.save();
+export class PinsService {
+  async createPin(): Promise<any> {
+    return { message: 'Pin creation logic will be implemented later.' };
   }
 
-  async getAllPins(): Promise<Pin[]> {
-    return this.pinModel.find().exec();
+  async getAllPins(): Promise<any> {
+    return [{ message: 'Retrieve all pins logic will be implemented later.' }];
   }
 }
