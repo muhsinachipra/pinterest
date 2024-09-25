@@ -45,24 +45,24 @@ const Account = ({ user }) => {
 
           <h1 className="text-center text-2xl font-bold mt-4">{user.name}</h1>
           <p className="text-center text-gray-600 mt-2">{user.email}</p>
-          <p className="flex justify-center items-center text-center gap-3 text-gray-600 mt-2">
+          <p className="flex justify-center items-center font-bold text-center gap-3 text-gray-800 mt-2">
             {user.followers && <p>{user.followers.length} followers</p>}
             {user.following && <p>{user.following.length} followings</p>}
           </p>
           <div className="flex justify-center mt-4 space-x-2">
-            <button onClick={logoutHandler} className="bg-gray-200 px-4 py-2 rounded">Logout</button>
+            <button onClick={logoutHandler} className="bg-gray-200 px-4 py-2 rounded-full">Logout</button>
           </div>
 
           <div className="mt-4 flex justify-center space-x-4">
             <button
               onClick={() => setViewMode('created')}
-              className={`px-4 py-2 rounded ${viewMode === 'created' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              className={`px-4 py-2 rounded-full ${viewMode === 'created' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
               Created Images
             </button>
             <button
               onClick={() => setViewMode('liked')}
-              className={`px-4 py-2 rounded ${viewMode === 'liked' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              className={`px-4 py-2 rounded-full ${viewMode === 'liked' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
             >
               Liked Images
             </button>

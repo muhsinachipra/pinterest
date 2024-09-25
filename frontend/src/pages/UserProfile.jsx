@@ -62,7 +62,7 @@ const UserProfile = ({ user: loggedInUser }) => {
 
             <h1 className="text-center text-2xl font-bold mt-4">{user.name}</h1>
             <p className="text-center text-gray-600 mt-2">{user.email}</p>
-            <p className="flex justify-center items-center text-center gap-3 text-gray-600 mt-2">
+            <p className="flex justify-center items-center font-bold text-center gap-3 text-gray-800 mt-2">
               {user.followers && <p>{user.followers.length} followers</p>}
               {user.following && <p>{user.following.length} followings</p>}
             </p>
@@ -72,7 +72,7 @@ const UserProfile = ({ user: loggedInUser }) => {
               <div className="flex justify-center mt-4 space-x-2">
                 <button
                   onClick={followHander}
-                  className="bg-gray-200 px-4 py-2 rounded"
+                  className="bg-gray-200 px-4 py-2 rounded-full"
                 >
                   {isFollow ? "Unfollow" : " Follow"}
                 </button>
