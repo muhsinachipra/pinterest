@@ -1,10 +1,11 @@
 # Pinterest-Like App
 
-This is a simple Pinterest-like app built using MongoDB, Node.js, React, and NestJS. The app allows users to like, tag, follow, and unfollow pictures. It includes automated unit tests and a test coverage report. The project structure is split into a backend and frontend.
+This is a simple Pinterest-like app built using MongoDB, Node.js, React, and NestJS. The app allows users to like and tag pictures, follow and unfollow creators . It includes automated unit tests and a test coverage report. The project structure is split into a backend and frontend.
 
 ## Features
 - **User Authentication:** Register, log in, and view user profiles.
-- **Pins (Pictures):** Create, view, like, tag, follow, and unfollow pins.
+- **Pins (Pictures):** Create, view, like, tag pins.
+- **Creator (User):**  follow, and unfollow creators.
 - **Automated Testing:** Unit tests and test coverage report using Jest.
 - **Responsive Design:** Built with TailwindCSS for responsive styling.
 
