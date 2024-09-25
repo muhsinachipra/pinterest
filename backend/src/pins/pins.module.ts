@@ -14,7 +14,6 @@ import { UsersModule } from '../users/users.module';
     MongooseModule.forFeature([{ name: Pin.name, schema: PinSchema }]),
     JwtModule.register({
       secret: process.env.JWT_SEC, // Use your JWT secret here
-      signOptions: { expiresIn: '60s' }, // Adjust as necessary
     }),
     UsersModule,
   ],
