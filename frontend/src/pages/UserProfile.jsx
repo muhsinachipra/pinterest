@@ -1,3 +1,5 @@
+// frontend\src\pages\UserProfile.jsx
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -72,9 +74,10 @@ const UserProfile = ({ user: loggedInUser }) => {
               <div className="flex justify-center mt-4 space-x-2">
                 <button
                   onClick={followHander}
-                  className="bg-gray-200 px-4 py-2 rounded-full"
+                  className={`mt-4 px-6 py-2 rounded-full text-white transition duration-300 
+                  ${isFollow ? "bg-red-500 hover:bg-red-600" : "bg-blue-500 hover:bg-blue-600"}`}
                 >
-                  {isFollow ? "Unfollow" : " Follow"}
+                  {isFollow ? "Unfollow" : "Follow"}
                 </button>
               </div>
             )}

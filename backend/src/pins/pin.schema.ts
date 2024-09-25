@@ -8,9 +8,6 @@ export class Pin extends Document {
   @Prop({ required: true })
   title: string;
 
-  // @Prop({ required: true })
-  // pin: string;
-
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   owner: Types.ObjectId;
 

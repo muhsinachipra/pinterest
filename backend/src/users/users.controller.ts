@@ -11,7 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { AuthGuard } from 'src/guards/auth.guard'; // Import your AuthGuard
+import { AuthGuard } from 'src/guards/auth.guard';
 import { Request, Response } from 'express';
 
 @Controller('users')
@@ -23,7 +23,7 @@ export class UsersController {
     @Body() body: { name: string; email: string; password: string },
     @Res() res: Response,
   ) {
-    const result = await this.userService.registerUser(body, res); // Expected 2 arguments, but got 1.ts(2554)
+    const result = await this.userService.registerUser(body, res);
     return res.status(result.status).json(result);
   }
 

@@ -3,9 +3,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User } from './user.schema'; // Import the User schema
+import { User } from './user.schema';
 import * as bcrypt from 'bcryptjs';
-import generateToken from 'src/utils/generateToken'; // Adjust the import based on your structure
+import generateToken from 'src/utils/generateToken';
 import { Response } from 'express';
 
 @Injectable()
@@ -65,10 +65,6 @@ export class UsersService {
     return user;
   }
 
-  // async userProfile(id: string) {
-  //   const user = await this.userModel.findById(id).select('-password');
-  //   return user;
-  // }
   async userProfile(id: string) {
     if (!Types.ObjectId.isValid(id)) {
       throw new HttpException('Invalid user ID', HttpStatus.BAD_REQUEST);
@@ -92,19 +88,15 @@ export class UsersService {
       return { status: 400, message: "You can't follow yourself" };
     }
 
-    // Cast _id to Types.ObjectId explicitly
     const loggedInUserIdObj = new Types.ObjectId(loggedInUser._id.toString());
     const userIdObj = new Types.ObjectId(user._id.toString());
 
-    // Follow/Unfollow logic
     if (user.followers.includes(loggedInUserIdObj)) {
-      // Unfollow logic
       const indexFollowing = loggedInUser.following.indexOf(userIdObj);
       const indexFollowers = user.followers.indexOf(loggedInUserIdObj);
       loggedInUser.following.splice(indexFollowing, 1);
       user.followers.splice(indexFollowers, 1);
     } else {
-      // Follow logic
       loggedInUser.following.push(userIdObj);
       user.followers.push(loggedInUserIdObj);
     }
@@ -120,7 +112,7 @@ export class UsersService {
   }
 
   async logOutUser(res: Response) {
-    res.cookie('token', '', { maxAge: 0 }); // Clear the token cookie
+    res.cookie('token', '', { maxAge: 0 });
     return {
       message: 'Logged Out Successfully',
     };

@@ -11,15 +11,15 @@ import { User } from '../users/user.schema';
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    @InjectModel(User.name) private readonly userModel: Model<User>, // Marked readonly for immutability
+    @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
 
-    const token = request.cookies?.token; // Using optional chaining to prevent undefined error
+    const token = request.cookies?.token;
     if (!token) {
-      return false; // Return false if token is not present
+      return false;
     }
 
     try {
@@ -29,15 +29,14 @@ export class AuthGuard implements CanActivate {
 
       const user = await this.userModel.findById(decodedData.id);
       if (!user) {
-        return false; // Return false if user is not found
+        return false;
       }
 
-      // Attach the user to the request object
       request['user'] = user;
-      return true; // Return true to allow access
+      return true;
     } catch (error) {
-      console.error(error); // Log error for debugging
-      return false; // Return false for any error in verification
+      console.error(error);
+      return false;
     }
   }
 }

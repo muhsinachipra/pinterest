@@ -13,7 +13,7 @@ import { UsersModule } from '../users/users.module';
   imports: [
     MongooseModule.forFeature([{ name: Pin.name, schema: PinSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SEC, // Use your JWT secret here
+      secret: process.env.JWT_SEC,
     }),
     UsersModule,
   ],

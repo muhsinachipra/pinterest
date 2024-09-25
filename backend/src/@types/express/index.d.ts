@@ -1,6 +1,6 @@
 // backend\src\@types\express\index.d.ts
 
-import { User } from '../../users/user.schema'; // Adjust the path as needed
+import { User } from '../../users/user.schema';
 
 declare global {
   namespace Express {

@@ -16,10 +16,10 @@ import {
   Req,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { AuthGuard } from '../guards/auth.guard'; // Adjust this import according to your structure
+import { AuthGuard } from '../guards/auth.guard';
 import { PinsService } from './pins.service';
 import { UploadFileInterceptor } from 'src/utils/uploadFile.interceptor';
-import { CreatePinDto } from './dto/create-pin.dto'; // Import your DTO if you have one
+import { CreatePinDto } from './dto/create-pin.dto';
 
 @Controller('pins')
 export class PinsController {
@@ -31,13 +31,13 @@ export class PinsController {
   async createPin(
     @Body() createPinDto: CreatePinDto,
     @UploadedFile() file: Express.Multer.File,
-    @Req() req: Request, // Using @Req() to get the request object
+    @Req() req: Request,
     @Res() res: Response,
   ) {
     const result = await this.pinsService.createPin(
       createPinDto,
       file,
-      req.user, // Property 'user' does not exist on type 'Request'.ts(2339)
+      req.user,
     );
     return res.json(result);
   }
@@ -84,10 +84,10 @@ export class PinsController {
   async commentOnPin(
     @Param('id') id: string,
     @Body('comment') comment: string,
-    @Req() req: Request, // Get the user from the request
+    @Req() req: Request,
     @Res() res: Response,
   ) {
-    const result = await this.pinsService.commentOnPin(id, comment, req.user); // Pass req.user to the service
+    const result = await this.pinsService.commentOnPin(id, comment, req.user);
     return res.json(result);
   }
 

@@ -31,7 +31,7 @@ export class PinsService {
 
     const newPin = new this.pinModel({
       title,
-      tags, // Save the tags
+      tags,
       image: {
         id: cloud.public_id,
         url: cloud.secure_url,
@@ -45,11 +45,11 @@ export class PinsService {
   }
 
   async getAllPins(): Promise<any> {
-    return await this.pinModel.find().sort({ createdAt: -1 }); // Property 'find' does not exist on type 'typeof Pin'.ts(2339)
+    return await this.pinModel.find().sort({ createdAt: -1 });
   }
 
   async getSinglePin(id: string): Promise<any> {
-    const pin = await this.pinModel.findById(id).populate('owner', '-password'); // Property 'findById' does not exist on type 'typeof Pin'.ts(2339)
+    const pin = await this.pinModel.findById(id).populate('owner', '-password');
     if (!pin) {
       throw new HttpException('No Pin with this id', HttpStatus.NOT_FOUND);
     }
@@ -63,7 +63,7 @@ export class PinsService {
     }
 
     pin.comments.push({
-      _id: new Types.ObjectId(), // Generate a new ObjectId for the comment
+      _id: new Types.ObjectId(),
       user: user._id,
       name: user.name,
       comment,
@@ -80,7 +80,7 @@ export class PinsService {
     }
 
     const commentIndex = pin.comments.findIndex(
-      (item) => item._id.toString() === commentId, // Property '_id' does not exist on type '{ user: string; name: string; comment: string; }'.ts(2339)
+      (item) => item._id.toString() === commentId,
     );
     if (commentIndex === -1) {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
@@ -130,7 +130,6 @@ export class PinsService {
     }
 
     pin.title = updatePinDto.title;
-    // pin.pin = updatePinDto.pin;
 
     await pin.save();
     return { message: 'Pin Updated' };

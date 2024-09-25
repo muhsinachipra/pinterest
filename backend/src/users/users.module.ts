@@ -5,14 +5,14 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { User, UserSchema } from './user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JwtModule } from '@nestjs/jwt'; // Import JwtModule
-import { AuthGuard } from '../guards/auth.guard'; // Import AuthGuard
+import { JwtModule } from '@nestjs/jwt';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
-      secret: process.env.JWT_SEC, // Use your JWT secret from env variables
+      secret: process.env.JWT_SEC,
     }),
   ],
   providers: [UsersService, AuthGuard],

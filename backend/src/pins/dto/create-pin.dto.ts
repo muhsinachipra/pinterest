@@ -7,9 +7,6 @@ export class CreatePinDto {
   @IsString()
   title: string;
 
-  // @IsString()
-  // pin: string;
-
   @IsArray()
   tags: string[];
 }
