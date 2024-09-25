@@ -95,7 +95,7 @@ This is a simple Pinterest-like app built using MongoDB, Node.js, React, and Nes
 ## Demo Video
 A detailed walkthrough of the code and a demo of the app can be found in the Vimeo link provided below.
 
-[[Insert Vimeo Link Here](https://vimeo.com/1012721916?share=copy)]
+[[Vimeo Link](https://vimeo.com/1012721916?share=copy)]
 
 ## License
 This project is licensed under the MIT License.
