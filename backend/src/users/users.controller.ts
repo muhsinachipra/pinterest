@@ -36,6 +36,13 @@ export class UsersController {
     return res.status(result.status).json(result);
   }
 
+  @Post('logout')
+  @UseGuards(AuthGuard)
+  async logOut(@Res() res: Response) {
+    const result = await this.userService.logOutUser(res);
+    return res.json(result);
+  }
+
   @Get('me')
   @UseGuards(AuthGuard)
   async myProfile(@Req() req: Request) {
@@ -53,17 +60,12 @@ export class UsersController {
   @Post('follow/:id')
   @UseGuards(AuthGuard)
   async followAndUnfollowUser(@Param('id') id: string, @Req() req: Request) {
+    console.log('id: ', id);
+    console.log('req.user._id.toString(): ', req.user._id.toString());
     const result = await this.userService.followAndUnfollowUser(
       id,
       req.user._id.toString(),
     );
     return result;
-  }
-
-  @Post('logout')
-  @UseGuards(AuthGuard)
-  async logOut(@Res() res: Response) {
-    const result = await this.userService.logOutUser(res);
-    return res.json(result);
   }
 }

@@ -1,6 +1,6 @@
 // src/users/users.service.ts
 
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from './user.schema'; // Import the User schema
@@ -65,8 +65,18 @@ export class UsersService {
     return user;
   }
 
+  // async userProfile(id: string) {
+  //   const user = await this.userModel.findById(id).select('-password');
+  //   return user;
+  // }
   async userProfile(id: string) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new HttpException('Invalid user ID', HttpStatus.BAD_REQUEST);
+    }
     const user = await this.userModel.findById(id).select('-password');
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
     return user;
   }
 
@@ -111,7 +121,6 @@ export class UsersService {
 
   async logOutUser(res: Response) {
     res.cookie('token', '', { maxAge: 0 }); // Clear the token cookie
-
     return {
       message: 'Logged Out Successfully',
     };

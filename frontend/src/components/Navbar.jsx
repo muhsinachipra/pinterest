@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const Navbar = ({ user }) => {
   return (
@@ -32,6 +33,10 @@ const Navbar = ({ user }) => {
       </div>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 export default Navbar;

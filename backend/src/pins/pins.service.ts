@@ -11,12 +11,18 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class PinsService {
-  constructor(@InjectModel(Pin.name) private pinModel: Model<Pin>) {}
+  constructor(@InjectModel(Pin.name) private pinModel: Model<Pin>) {
+    cloudinary.v2.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+  }
 
   async createPin(
     createPinDto: CreatePinDto,
     file: Express.Multer.File,
-    user: any, // Receiving user object from the controller
+    user: any,
   ): Promise<any> {
     const { title, pin } = createPinDto;
 
@@ -30,7 +36,7 @@ export class PinsService {
         id: cloud.public_id,
         url: cloud.secure_url,
       },
-      owner: user._id, // Using the passed user object to set the owner
+      owner: user._id,
     });
 
     await newPin.save();
@@ -128,5 +134,39 @@ export class PinsService {
 
     await pin.save();
     return { message: 'Pin Updated' };
+  }
+
+  async likePin(pinId: string, userId: string) {
+    const pin = await this.pinModel.findById(pinId);
+    if (!pin) throw new HttpException('Pin not found', HttpStatus.NOT_FOUND);
+
+    const userObjectId = new Types.ObjectId(userId);
+    if (!pin.likes.includes(userObjectId)) {
+      pin.likes.push(userObjectId);
+      await pin.save();
+      return { message: 'Pin liked successfully' };
+    } else {
+      throw new HttpException(
+        'You have already liked this pin',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async unlikePin(pinId: string, userId: string) {
+    const pin = await this.pinModel.findById(pinId);
+    if (!pin) throw new HttpException('Pin not found', HttpStatus.NOT_FOUND);
+
+    const userObjectId = new Types.ObjectId(userId);
+    if (pin.likes.includes(userObjectId)) {
+      pin.likes = pin.likes.filter((id) => id.toString() !== userId);
+      await pin.save();
+      return { message: 'Pin unliked successfully' };
+    } else {
+      throw new HttpException(
+        'You have not liked this pin',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

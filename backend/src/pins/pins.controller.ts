@@ -106,4 +106,32 @@ export class PinsController {
     );
     return res.json(result);
   }
+
+  @Put('like/:id')
+  @UseGuards(AuthGuard)
+  async likePin(
+    @Param('id') pinId: string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.pinsService.likePin(
+      pinId,
+      req.user._id.toString(),
+    );
+    return res.json(result);
+  }
+
+  @Put('unlike/:id')
+  @UseGuards(AuthGuard)
+  async unlikePin(
+    @Param('id') pinId: string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const result = await this.pinsService.unlikePin(
+      pinId,
+      req.user._id.toString(),
+    );
+    return res.json(result);
+  }
 }

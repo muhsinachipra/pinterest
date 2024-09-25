@@ -17,6 +17,9 @@ export class Pin extends Document {
   @Prop({ type: [String], default: [] })
   tags: string[];
 
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
+  likes: Types.ObjectId[];
+
   @Prop({
     type: {
       id: { type: String },
