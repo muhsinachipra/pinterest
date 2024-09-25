@@ -13,7 +13,7 @@ const Create = () => {
   const [file, setFile] = useState("");
   const [filePrev, setFilePrev] = useState("");
   const [title, setTitle] = useState("");
-  const [pin, setPin] = useState("");
+  const [tags, setTags] = useState([]);
   const { addPin } = PinData();
 
   const changeFileHandler = (e) => {
@@ -34,13 +34,27 @@ const Create = () => {
     e.preventDefault();
 
     const formData = new FormData();
-
     formData.append("title", title);
-    formData.append("pin", pin);
+
+    // Append each tag individually to FormData
+    tags.forEach(tag => formData.append("tags[]", tag)); // Note the use of "tags[]"
+
     formData.append("file", file);
 
-    addPin(formData, setFilePrev, setFile, setTitle, setPin, navigate);
+    addPin(formData, setFilePrev, setFile, setTitle, setTags, navigate);
   };
+
+  const handleTagInputKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent form submission
+      const tag = e.target.value.trim();
+      if (tag) {
+        setTags((prevTags) => [...prevTags, tag]);
+        e.target.value = ""; // Clear input field
+      }
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-wrap justify-center items-center gap-2 mt-10">
@@ -64,7 +78,7 @@ const Create = () => {
               <p className="text-gray-500">Choose a file</p>
             </div>
             <p className="mt-4 text-sm text-gray-400">
-              we recomment using high quality .jpg files but less than 10mb
+              We recommend using high-quality .jpg files but less than 10mb
             </p>
           </div>
         </div>
@@ -93,19 +107,25 @@ const Create = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="pin"
+                  htmlFor="tags"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Pin
+                  Tags (Press Enter to add)
                 </label>
                 <input
                   type="text"
-                  id="pin"
+                  id="tags"
                   className="common-input"
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value)}
-                  required
+                  onKeyDown={handleTagInputKeyDown}
+                  placeholder="Add a tag and press Enter"
                 />
+                <div className="mt-2">
+                  {tags.map((tag, index) => (
+                    <span key={index} className="inline-block bg-blue-200 text-blue-800 text-sm px-2 py-1 rounded-full mr-2">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
               </div>
               <button className="common-btn">Add+</button>
             </form>

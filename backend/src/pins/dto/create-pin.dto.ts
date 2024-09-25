@@ -1,11 +1,15 @@
 // backend\src\pins\dto\create-pin.dto.ts
 
-import { IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePinDto {
+  @IsNotEmpty()
   @IsString()
   title: string;
 
-  @IsString()
-  pin: string;
+  // @IsString()
+  // pin: string;
+
+  @IsArray()
+  tags: string[];
 }

@@ -139,7 +139,16 @@ const PinPage = ({ user }) => {
                   )}
                 </div>
 
-                {edit ? (
+                {/* Display Tags as Hashtags */}
+                <div className="flex flex-wrap mb-4">
+                  {pin.tags && pin.tags.length > 0 && pin.tags.map((tag, index) => (
+                    <span key={index} className="bg-blue-200 text-blue-800 text-sm px-2 py-1 rounded-full mr-2">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* {edit ? (
                   <input
                     value={pinValue}
                     onChange={(e) => setPinValue(e.target.value)}
@@ -149,7 +158,7 @@ const PinPage = ({ user }) => {
                   />
                 ) : (
                   <p className="mb-6">{pin.pin}</p>
-                )}
+                )} */}
 
                 {edit && (
                   <button

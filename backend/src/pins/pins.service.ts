@@ -24,14 +24,14 @@ export class PinsService {
     file: Express.Multer.File,
     user: any,
   ): Promise<any> {
-    const { title, pin } = createPinDto;
+    const { title, tags } = createPinDto;
 
     const fileUrl = getDataUrl(file);
     const cloud = await cloudinary.v2.uploader.upload(fileUrl.content);
 
     const newPin = new this.pinModel({
       title,
-      pin,
+      tags, // Save the tags
       image: {
         id: cloud.public_id,
         url: cloud.secure_url,
@@ -130,7 +130,7 @@ export class PinsService {
     }
 
     pin.title = updatePinDto.title;
-    pin.pin = updatePinDto.pin;
+    // pin.pin = updatePinDto.pin;
 
     await pin.save();
     return { message: 'Pin Updated' };
