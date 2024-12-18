@@ -29,7 +29,7 @@ export const PinProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await axios.get("/api/pins/" + id);
-      console.log('Fetched pin data: ', data); // Log the fetched data
+      console.log('Fetched pin data: ', data);
       setPin(data);
       setLoading(false);
     } catch (error) {
@@ -37,6 +37,7 @@ export const PinProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  
 
 
   async function updatePin(id, title, pin, setEdit) {
