@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRoot(process.env.MONGO_URL),
     JwtModule.register({
       secret: process.env.JWT_SEC,
+      signOptions: { expiresIn: '1h' },
     }),
     PinsModule,
     UsersModule,

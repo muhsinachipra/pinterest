@@ -1,3 +1,5 @@
+// frontend\src\pages\PinPage.jsx
+
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { PinData } from "../context/PinContext";
@@ -21,7 +23,6 @@ const PinPage = ({ user }) => {
     deleteComment,
     deletePin,
   } = PinData();
-
   const { followUser } = UserData();
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState("");
@@ -30,6 +31,19 @@ const PinPage = ({ user }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [comment, setComment] = useState("");
   const [isFollowing, setIsFollowing] = useState(false);
+
+  useEffect(() => {
+    fetchPin(params.id);
+  }, [params.id]);
+
+  // Add a useEffect to handle loading and pin updates
+  useEffect(() => {
+    if (pin) {
+      setLikeCount(pin.likes.length);
+      setIsLiked(pin.likes.includes(user._id));
+      setIsFollowing(pin.owner.followers.includes(user._id));
+    }
+  }, [pin, user]);
 
   const navigate = useNavigate();
 
@@ -49,13 +63,13 @@ const PinPage = ({ user }) => {
   };
 
   const deleteCommentHandler = (id) => {
-    if (confirm("Are you sure you want to delete this comment")) {
+    if (confirm("Are you sure you want to delete this comment?")) {
       deleteComment(pin._id, id);
     }
   };
 
   const deletePinHandler = () => {
-    if (confirm("Are you sure you want to delete this pin")) {
+    if (confirm("Are you sure you want to delete this pin?")) {
       deletePin(pin._id, navigate);
     }
   };
@@ -76,26 +90,16 @@ const PinPage = ({ user }) => {
     followUser(pin.owner._id, fetchPin);
   };
 
-  useEffect(() => {
-    fetchPin(params.id);
-  }, [params.id]);
-
-  useEffect(() => {
-    if (pin) {
-      setLikeCount(pin.likes.length);
-      setIsLiked(pin.likes.includes(user._id));
-      setIsFollowing(pin.owner.followers.includes(user._id));
-    }
-  }, [pin, user]);
-
   return (
     <div className="flex flex-col items-center bg-gray-50 p-4 min-h-screen">
       {loading ? (
         <Loading />
+      ) : !pin ? ( // Check if pin is null
+        <div className="text-center text-gray-500">Pin not found.</div>
       ) : (
         <div className="bg-white rounded-lg shadow-lg flex flex-wrap w-full max-w-4xl p-6">
           <div className="w-full md:w-1/2 flex items-center justify-center">
-            {pin.image && (
+            {pin.image && ( // Check if pin.image exists
               <img
                 src={pin.image.url}
                 alt=""
@@ -114,7 +118,7 @@ const PinPage = ({ user }) => {
                   placeholder="Enter Title"
                 />
               ) : (
-                <h1 className="text-2xl font-bold">{pin.title}</h1>
+                <h1 className="text-2xl font-bold">{pin.title}</h1> // Accessing pin.title after null check
               )}
 
               {pin.owner && pin.owner._id === user._id && (
