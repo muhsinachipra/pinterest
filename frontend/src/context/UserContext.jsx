@@ -83,6 +83,19 @@ export const UserProvider = ({ children }) => {
     }
   }
 
+  // Logout a user
+  async function logoutUser(navigate) {
+    try {
+      const { data } = await api.post("/api/users/logout");
+      toast.success(data.message);
+      setIsAuth(false);
+      setUser([]);
+      navigate("/login");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Logout failed");
+    }
+  }
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -95,6 +108,7 @@ export const UserProvider = ({ children }) => {
         user,
         loading,
         registerUser,
+        logoutUser,
         setIsAuth,
         setUser,
         followUser,

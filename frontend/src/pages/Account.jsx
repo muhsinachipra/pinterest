@@ -1,28 +1,20 @@
+// frontend\src\pages\Account.jsx
+
 import { useState } from "react"; // Import useState
 import { PinData } from "../context/PinContext";
 import PinCard from "../components/PinCard";
-import toast from "react-hot-toast";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserData } from "../context/UserContext";
 import PropTypes from 'prop-types';
 
 const Account = ({ user }) => {
   const navigate = useNavigate();
-  const { setIsAuth, setUser } = UserData();
+  const { logoutUser } = UserData();
   const { pins } = PinData();
   const [viewMode, setViewMode] = useState('created'); // New state to manage view mode
 
   const logoutHandler = async () => {
-    try {
-      const { data } = await axios.post("/api/users/logout");
-      toast.success(data.message);
-      navigate("/login");
-      setIsAuth(false);
-      setUser([]);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    logoutUser(navigate);
   };
 
   let userPins;
