@@ -4,6 +4,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
+// Get the API base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// Create a pre-configured axios instance with the base URL
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -14,7 +22,7 @@ export const UserProvider = ({ children }) => {
   async function registerUser(name, email, password, navigate, fetchPins) {
     setBtnLoading(true);
     try {
-      const { data } = await axios.post("/api/users/register", {
+      const { data } = await api.post("/api/users/register", {
         name,
         email,
         password,
@@ -35,7 +43,7 @@ export const UserProvider = ({ children }) => {
   async function loginUser(email, password, navigate, fetchPins) {
     setBtnLoading(true);
     try {
-      const { data } = await axios.post("/api/users/login", { email, password });
+      const { data } = await api.post("/api/users/login", { email, password });
 
       toast.success(data.message);
       setUser(data.user);
@@ -53,7 +61,7 @@ export const UserProvider = ({ children }) => {
 
   async function fetchUser() {
     try {
-      const { data } = await axios.get("/api/users/me");
+      const { data } = await api.get("/api/users/me");
 
       setUser(data);
       setIsAuth(true);
@@ -66,7 +74,7 @@ export const UserProvider = ({ children }) => {
 
   async function followUser(id, fetchUser) {
     try {
-      const { data } = await axios.post("/api/users/follow/" + id);
+      const { data } = await api.post("/api/users/follow/" + id);
 
       toast.success(data.message);
       fetchUser();
