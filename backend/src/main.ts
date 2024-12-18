@@ -8,6 +8,14 @@ import * as dotenv from 'dotenv';
 async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'https://pinterest-sigma-ten.vercel.app',  // Allow the frontend origin
+    methods: 'GET,POST,PUT,DELETE',                    // Allowed methods
+    allowedHeaders: 'Content-Type, Accept, Authorization',  // Allowed headers
+    credentials: true,                                // Allow cookies and credentials to be sent
+  });
+
   app.setGlobalPrefix('api');
   app.use(cookieParser());
   await app.listen(3000);
